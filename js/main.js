@@ -19,11 +19,9 @@ $form.addEventListener('submit', function (event) {
     title: $title.value,
     photourl: $photoUrl.value,
     notes: $notes.value,
-    nextEntryId: data.nextEntryId
+    nextEntryId: data.nextEntryId++
   };
   data.entries.unshift(entry);
-  data.nextEntryId++;
-  // console.log(data.nextEntryId);
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
 });
