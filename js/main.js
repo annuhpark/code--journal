@@ -5,6 +5,8 @@ var $title = document.querySelector('#title');
 var $notes = document.querySelector('#notes');
 var $image = document.querySelector('img');
 var $form = document.querySelector('form');
+var $entriesButton = document.querySelector('.entries');
+var $views = document.querySelectorAll('.view');
 
 $photoUrl.addEventListener('input', function (event) {
   $image.setAttribute('src', $photoUrl.value);
@@ -56,3 +58,14 @@ for (let i = 0; i < data.entries.length; i++) {
   var value = renderEntries(data.entries[i]);
   $ul.appendChild(value);
 }
+
+$entriesButton.addEventListener('click', function (event) {
+  for (let i = 0; i < $views.length; i++) {
+    var $dataView = $views[i].getAttribute('data-view');
+    if ($dataView === 'entries') {
+      $views[i].className = 'view';
+    } else if ($dataView !== 'entries') {
+      $views[i].className = 'view hidden';
+    }
+  }
+});

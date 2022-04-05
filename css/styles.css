@@ -56,6 +56,10 @@ label {
   border: none;
 }
 
+.entries:hover {
+  cursor: pointer;
+}
+
 /* Input */
 
 input {
