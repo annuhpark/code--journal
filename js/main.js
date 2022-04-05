@@ -7,6 +7,7 @@ var $image = document.querySelector('img');
 var $form = document.querySelector('form');
 var $entriesButton = document.querySelector('.entries');
 var $views = document.querySelectorAll('.view');
+var $ul = document.querySelector('ul');
 
 $photoUrl.addEventListener('input', function (event) {
   $image.setAttribute('src', $photoUrl.value);
@@ -27,6 +28,7 @@ $form.addEventListener('submit', function (event) {
   data.entries.unshift(entry);
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
+  $ul.prepend(renderEntries(entry));
 });
 
 function renderEntries(journalentry) {
@@ -53,7 +55,6 @@ function renderEntries(journalentry) {
   return $container;
 }
 
-var $ul = document.querySelector('ul');
 for (let i = 0; i < data.entries.length; i++) {
   var value = renderEntries(data.entries[i]);
   $ul.appendChild(value);
