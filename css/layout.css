@@ -28,12 +28,25 @@
   text-align: right;
 }
 
+.text-align-center {
+  text-align: center;
+}
+
 .padding-top {
   padding-top: 20px;
 }
 
 .padding-bottom {
   padding-bottom: 30px;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
 }
 
 @media screen and (min-width: 768px) {

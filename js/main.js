@@ -31,7 +31,7 @@ function renderEntries(journalentry) {
   var $container = document.createElement('div');
   $container.setAttribute('class', 'container');
   var $row = document.createElement('div');
-  $row.setAttribute('class', 'row padding-bottom');
+  $row.setAttribute('class', 'row padding-bottom align-items-center');
   $container.appendChild($row);
   var $columnHalf = document.createElement('div');
   $columnHalf.setAttribute('class', 'column-half');
@@ -49,4 +49,10 @@ function renderEntries(journalentry) {
   $p.textContent = journalentry.notes;
   $secondColumnHalf.appendChild($p);
   return $container;
+}
+
+var $ul = document.querySelector('ul');
+for (let i = 0; i < data.entries.length; i++) {
+  var value = renderEntries(data.entries[i]);
+  $ul.appendChild(value);
 }
