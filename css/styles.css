@@ -9,9 +9,26 @@ h1 {
   font-family: "Proza Libre", sans-serif;
 }
 
+h2 {
+  font-family: "Proza Libre", sans-serif;
+}
+
 h3 {
   font-family: "Proza Libre", sans-serif;
   color: white;
+  display: inline-block;
+}
+
+h5 {
+  font-family: "Proza Libre", sans-serif;
+  color: white;
+  display: inline-block;
+  padding-left: 10px;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
 }
 
 label {
@@ -37,6 +54,14 @@ label {
   font-family: "Proza Libre", sans-serif;
   box-shadow: none;
   border: none;
+}
+
+.entries:hover {
+  cursor: pointer;
+}
+
+.code-journal:hover {
+  cursor: pointer;
 }
 
 /* Input */

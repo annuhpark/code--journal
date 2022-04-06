@@ -25,19 +25,20 @@
     <div class="container">
       <div class="row">
         <header class="column-full">
-          <h3>Code Journal</h3>
+          <a class="code-journal"><h3>Code Journal</h3></a>
+          <a class="entries"><h5>Entries</h5></a>
         </header>
       </div>
     </div>
   </div>
-  <div class="container">
-    <div class="row">
-      <main class="column-full">
-        <h1>New Entry</h1>
-      </main>
+  <div data-view="entry-form" class="view">
+    <div class="container">
+      <div class="row">
+        <div class="column-full">
+          <h1>New Entry</h1>
+        </div>
+      </div>
     </div>
-  </div>
-  <div data-view="entry-form">
     <form>
       <div class="container">
         <div class="row">
@@ -76,6 +77,16 @@
         </div>
       </div>
     </form>
+  </div>
+  <div data-view="entries" class="view hidden">
+    <div class="container">
+      <div class="row">
+        <div class="column-full">
+          <h1>Entries</h1>
+        </div>
+      </div>
+    </div>
+    <ul></ul>
   </div>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
