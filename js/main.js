@@ -20,20 +20,37 @@ $photoUrl.addEventListener('input', function (event) {
 
 $form.addEventListener('submit', function (event) {
   event.preventDefault();
-  var entry = {
-    title: $title.value,
-    photourl: $photoUrl.value,
-    notes: $notes.value,
-    entryId: data.nextEntryId
-  };
-  data.nextEntryId++;
-  data.entries.unshift(entry);
-  $image.setAttribute('src', 'images/placeholder-image-square.jpg');
-  $form.reset();
-  $ul.prepend(renderEntries(entry));
-  $views[0].className = 'view hidden';
-  $views[1].className = 'view';
-  data.view = 'entries';
+  if (data.editing === null) {
+    var entry = {
+      title: $title.value,
+      photourl: $photoUrl.value,
+      notes: $notes.value,
+      entryId: data.nextEntryId
+    };
+    data.nextEntryId++;
+    data.entries.unshift(entry);
+    $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+    $form.reset();
+    $ul.prepend(renderEntries(entry));
+    $views[0].className = 'view hidden';
+    $views[1].className = 'view';
+  } else {
+    var newEntry = {
+      title: $title.value,
+      photourl: $photoUrl.value,
+      notes: $notes.value,
+      entryId: data.editing.entryId
+    };
+    var $newEntry = renderEntries(newEntry);
+    for (var i = 0; i < $ul.children.length; i++) {
+      if (parseInt($ul.children[i].getAttribute('data-entry-id')) === newEntry.entryId) {
+        $ul.children[i].replaceWith($newEntry);
+        data.entries.splice(i, 1, newEntry);
+      }
+    }
+    data.editing = null;
+  }
+  switchViewTo('entries');
 });
 
 function renderEntries(journalentry) {
@@ -53,7 +70,7 @@ function renderEntries(journalentry) {
   $secondColumnHalf.setAttribute('class', 'column-half');
   $row.appendChild($secondColumnHalf);
   var $secondRow = document.createElement('div');
-  $secondRow.setAttribute('class', 'row space-between align-items-center');
+  $secondRow.setAttribute('class', 'row2 space-between align-items-center');
   $secondColumnHalf.appendChild($secondRow);
   var $h2 = document.createElement('h2');
   $h2.textContent = journalentry.title;
@@ -76,32 +93,20 @@ document.addEventListener('DOMContentLoaded', function (event) {
     $ul.appendChild(value);
   }
   switchViewTo(data.view);
+  data.editing = null;
 });
 
 $entriesButton.addEventListener('click', function (event) {
-  // for (let i = 0; i < $views.length; i++) {
-  //   var $dataView = $views[i].getAttribute('data-view');
-  //   if ($dataView === 'entries') {
-  //     $views[i].className = 'view';
-  //     data.view = 'entries';
-  //   } else if ($dataView !== 'entries') {
-  //     $views[i].className = 'view hidden';
-  //   }
-  // }
   switchViewTo('entries');
 });
 
 $codeJournalButton.addEventListener('click', function (event) {
-  // for (let i = 0; i < $views.length; i++) {
-  //   var $dataView = $views[i].getAttribute('data-view');
-  //   if ($dataView === 'entry-form') {
-  //     $views[i].className = 'view';
-  //     data.view = 'entry-form';
-  //   } else if ($dataView !== 'entry-form') {
-  //     $views[i].className = 'view hidden';
-  //   }
-  // }
   switchViewTo('entry-form');
+  $newEntryHeading.textContent = 'New Entry';
+  $image.setAttribute('src', 'images/placeholder-image-square.jpg');
+  $title.value = '';
+  $notes.value = '';
+  $photoUrl.value = '';
 });
 
 function switchViewTo(targetPage) {
@@ -122,11 +127,11 @@ $ul.addEventListener('click', function (event) {
     for (let i = 0; i < data.entries.length; i++) {
       if (data.entries[i].entryId === parseInt(event.target.closest('.container').getAttribute('data-entry-id'))) {
         data.editing = data.entries[i];
-        $title.value = data.editing.title;
-        $photoUrl.value = data.editing.photourl;
-        $image.setAttribute('src', $photoUrl.value);
-        $notes.value = data.editing.notes;
       }
     }
+    $title.value = data.editing.title;
+    $photoUrl.value = data.editing.photourl;
+    $image.setAttribute('src', $photoUrl.value);
+    $notes.value = data.editing.notes;
   }
 });
