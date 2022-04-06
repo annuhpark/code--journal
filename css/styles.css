@@ -3,6 +3,11 @@ img {
   padding-bottom: 6px;
 }
 
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
 /* Font Decoration */
 
 h1 {
@@ -84,4 +89,15 @@ textarea {
   padding-left: 6px;
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
+}
+
+/* Pencil */
+
+.fa-pencil-alt {
+  color: #8752bd;
+}
+
+.fa-pencil-alt:hover {
+  color: #562b81;
+  cursor: pointer;
 }

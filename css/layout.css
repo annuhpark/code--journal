@@ -13,6 +13,10 @@
   flex-wrap: wrap;
 }
 
+.row2 {
+  display: flex;
+}
+
 .column-full,
 .column-half {
   width: 100%;
@@ -22,7 +26,7 @@
   width: 100%;
 }
 
-/* Structure */
+/* Structure and Spacing */
 
 .align-right {
   text-align: right;
@@ -44,9 +48,8 @@
   align-items: center;
 }
 
-ul {
-  padding: 0;
-  list-style-type: none;
+.space-between {
+  justify-content: space-between;
 }
 
 @media screen and (min-width: 768px) {
