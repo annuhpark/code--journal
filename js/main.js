@@ -120,11 +120,12 @@ $ul.addEventListener('click', function (event) {
     switchViewTo('entry-form');
     $newEntryHeading.textContent = 'Edit Entry';
     for (let i = 0; i < data.entries.length; i++) {
-      // console.log(data.entries[i].entryId);
-      // console.log(event.target.closest('.container').getAttribute('data-entry-id'));
       if (data.entries[i].entryId === parseInt(event.target.closest('.container').getAttribute('data-entry-id'))) {
         data.editing = data.entries[i];
-        // console.log(data.editing);
+        $title.value = data.editing.title;
+        $photoUrl.value = data.editing.photourl;
+        $image.setAttribute('src', $photoUrl.value);
+        $notes.value = data.editing.notes;
       }
     }
   }
