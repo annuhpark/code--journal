@@ -94,5 +94,10 @@ textarea {
 /* Pencil */
 
 .fa-pencil-alt {
+  color: #8752bd;
+}
+
+.fa-pencil-alt:hover {
   color: #562b81;
+  cursor: pointer;
 }

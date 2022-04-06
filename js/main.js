@@ -9,6 +9,7 @@ var $entriesButton = document.querySelector('.entries');
 var $codeJournalButton = document.querySelector('.code-journal');
 var $views = document.querySelectorAll('.view');
 var $ul = document.querySelector('ul');
+var $newEntryHeading = document.querySelector('.new-entry-heading');
 
 $photoUrl.addEventListener('input', function (event) {
   $image.setAttribute('src', $photoUrl.value);
@@ -35,17 +36,10 @@ $form.addEventListener('submit', function (event) {
   data.view = 'entries';
 });
 
-document.addEventListener('DOMContentLoaded', function (event) {
-  for (let i = 0; i < data.entries.length; i++) {
-    var value = renderEntries(data.entries[i]);
-    $ul.appendChild(value);
-  }
-  switchViewTo(data.view);
-});
-
 function renderEntries(journalentry) {
   var $container = document.createElement('div');
   $container.setAttribute('class', 'container');
+  $container.setAttribute('data-entry-id', journalentry.entryId);
   var $row = document.createElement('div');
   $row.setAttribute('class', 'row padding-bottom align-items-center');
   $container.appendChild($row);
@@ -76,36 +70,62 @@ function renderEntries(journalentry) {
   return $container;
 }
 
-$entriesButton.addEventListener('click', function (event) {
-  for (let i = 0; i < $views.length; i++) {
-    var $dataView = $views[i].getAttribute('data-view');
-    if ($dataView === 'entries') {
-      $views[i].className = 'view';
-      data.view = 'entries';
-    } else if ($dataView !== 'entries') {
-      $views[i].className = 'view hidden';
-    }
+document.addEventListener('DOMContentLoaded', function (event) {
+  for (let i = 0; i < data.entries.length; i++) {
+    var value = renderEntries(data.entries[i]);
+    $ul.appendChild(value);
   }
+  switchViewTo(data.view);
+});
+
+$entriesButton.addEventListener('click', function (event) {
+  // for (let i = 0; i < $views.length; i++) {
+  //   var $dataView = $views[i].getAttribute('data-view');
+  //   if ($dataView === 'entries') {
+  //     $views[i].className = 'view';
+  //     data.view = 'entries';
+  //   } else if ($dataView !== 'entries') {
+  //     $views[i].className = 'view hidden';
+  //   }
+  // }
+  switchViewTo('entries');
 });
 
 $codeJournalButton.addEventListener('click', function (event) {
-  for (let i = 0; i < $views.length; i++) {
-    var $dataView = $views[i].getAttribute('data-view');
-    if ($dataView === 'entry-form') {
-      $views[i].className = 'view';
-      data.view = 'entry-form';
-    } else if ($dataView !== 'entry-form') {
-      $views[i].className = 'view hidden';
-    }
-  }
+  // for (let i = 0; i < $views.length; i++) {
+  //   var $dataView = $views[i].getAttribute('data-view');
+  //   if ($dataView === 'entry-form') {
+  //     $views[i].className = 'view';
+  //     data.view = 'entry-form';
+  //   } else if ($dataView !== 'entry-form') {
+  //     $views[i].className = 'view hidden';
+  //   }
+  // }
+  switchViewTo('entry-form');
 });
 
 function switchViewTo(targetPage) {
   for (let i = 0; i < $views.length; i++) {
     if ($views[i].getAttribute('data-view') === targetPage) {
       $views[i].className = 'view';
+      data.view = targetPage;
     } else {
       $views[i].className = 'view hidden';
     }
   }
 }
+
+$ul.addEventListener('click', function (event) {
+  if (event.target.nodeName === 'I') {
+    switchViewTo('entry-form');
+    $newEntryHeading.textContent = 'Edit Entry';
+    for (let i = 0; i < data.entries.length; i++) {
+      // console.log(data.entries[i].entryId);
+      // console.log(event.target.closest('.container').getAttribute('data-entry-id'));
+      if (data.entries[i].entryId === parseInt(event.target.closest('.container').getAttribute('data-entry-id'))) {
+        data.editing = data.entries[i];
+        // console.log(data.editing);
+      }
+    }
+  }
+});
