@@ -58,12 +58,21 @@ function renderEntries(journalentry) {
   var $secondColumnHalf = document.createElement('div');
   $secondColumnHalf.setAttribute('class', 'column-half');
   $row.appendChild($secondColumnHalf);
+  var $secondRow = document.createElement('div');
+  $secondRow.setAttribute('class', 'row space-between align-items-center');
+  $secondColumnHalf.appendChild($secondRow);
   var $h2 = document.createElement('h2');
   $h2.textContent = journalentry.title;
-  $secondColumnHalf.appendChild($h2);
+  $secondRow.appendChild($h2);
+  var $pencil = document.createElement('i');
+  $pencil.setAttribute('class', 'fas fa-pencil-alt');
+  $secondRow.appendChild($pencil);
+  var $thirdRow = document.createElement('div');
+  $thirdRow.setAttribute('class', 'row');
+  $secondColumnHalf.appendChild($thirdRow);
   var $p = document.createElement('p');
   $p.textContent = journalentry.notes;
-  $secondColumnHalf.appendChild($p);
+  $thirdRow.appendChild($p);
   return $container;
 }
 
