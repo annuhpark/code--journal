@@ -7,12 +7,13 @@ var data = {
   nextEntryId: 1
 };
 
-window.addEventListener('beforeunload', function (event) {
-  var todosJSON = JSON.stringify(data.entries);
-  localStorage.setItem('javascript-local-storage', todosJSON);
-});
-
-var previousEntriesJSON = localStorage.getItem('javascript-local-storage');
-if (previousEntriesJSON !== null) {
-  data.entries = JSON.parse(previousEntriesJSON);
+var previousDataJSON = localStorage.getItem('local-journal');
+if (previousDataJSON !== null) {
+  data = JSON.parse(previousDataJSON);
 }
+
+function storeLocal(event) {
+  var dataJSON = JSON.stringify(data);
+  localStorage.setItem('local-journal', dataJSON);
+}
+window.addEventListener('beforeunload', storeLocal);

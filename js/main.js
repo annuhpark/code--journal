@@ -6,6 +6,7 @@ var $notes = document.querySelector('#notes');
 var $image = document.querySelector('img');
 var $form = document.querySelector('form');
 var $entriesButton = document.querySelector('.entries');
+var $codeJournalButton = document.querySelector('.code-journal');
 var $views = document.querySelectorAll('.view');
 var $ul = document.querySelector('ul');
 
@@ -22,13 +23,24 @@ $form.addEventListener('submit', function (event) {
     title: $title.value,
     photourl: $photoUrl.value,
     notes: $notes.value,
-    nextEntryId: data.nextEntryId
+    entryId: data.nextEntryId
   };
   data.nextEntryId++;
   data.entries.unshift(entry);
   $image.setAttribute('src', 'images/placeholder-image-square.jpg');
   $form.reset();
   $ul.prepend(renderEntries(entry));
+  $views[0].className = 'view hidden';
+  $views[1].className = 'view';
+  data.view = 'entries';
+});
+
+document.addEventListener('DOMContentLoaded', function (event) {
+  for (let i = 0; i < data.entries.length; i++) {
+    var value = renderEntries(data.entries[i]);
+    $ul.appendChild(value);
+  }
+  switchViewTo(data.view);
 });
 
 function renderEntries(journalentry) {
@@ -55,18 +67,36 @@ function renderEntries(journalentry) {
   return $container;
 }
 
-for (let i = 0; i < data.entries.length; i++) {
-  var value = renderEntries(data.entries[i]);
-  $ul.appendChild(value);
-}
-
 $entriesButton.addEventListener('click', function (event) {
   for (let i = 0; i < $views.length; i++) {
     var $dataView = $views[i].getAttribute('data-view');
     if ($dataView === 'entries') {
       $views[i].className = 'view';
+      data.view = 'entries';
     } else if ($dataView !== 'entries') {
       $views[i].className = 'view hidden';
     }
   }
 });
+
+$codeJournalButton.addEventListener('click', function (event) {
+  for (let i = 0; i < $views.length; i++) {
+    var $dataView = $views[i].getAttribute('data-view');
+    if ($dataView === 'entry-form') {
+      $views[i].className = 'view';
+      data.view = 'entry-form';
+    } else if ($dataView !== 'entry-form') {
+      $views[i].className = 'view hidden';
+    }
+  }
+});
+
+function switchViewTo(targetPage) {
+  for (let i = 0; i < $views.length; i++) {
+    if ($views[i].getAttribute('data-view') === targetPage) {
+      $views[i].className = 'view';
+    } else {
+      $views[i].className = 'view hidden';
+    }
+  }
+}

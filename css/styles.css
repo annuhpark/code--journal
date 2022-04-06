@@ -60,6 +60,10 @@ label {
   cursor: pointer;
 }
 
+.code-journal:hover {
+  cursor: pointer;
+}
+
 /* Input */
 
 input {
