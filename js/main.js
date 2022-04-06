@@ -1,5 +1,7 @@
 /* global data */
 /* exported data */
+
+/* DOM Querying */
 var $photoUrl = document.querySelector('#photourl');
 var $title = document.querySelector('#title');
 var $notes = document.querySelector('#notes');
@@ -11,6 +13,7 @@ var $views = document.querySelectorAll('.view');
 var $ul = document.querySelector('ul');
 var $newEntryHeading = document.querySelector('.new-entry-heading');
 
+/* Updating photo from image URL */
 $photoUrl.addEventListener('input', function (event) {
   $image.setAttribute('src', $photoUrl.value);
   if ($photoUrl.value === '') {
@@ -18,6 +21,7 @@ $photoUrl.addEventListener('input', function (event) {
   }
 });
 
+/* Submit event */
 $form.addEventListener('submit', function (event) {
   event.preventDefault();
   if (data.editing === null) {
@@ -53,6 +57,7 @@ $form.addEventListener('submit', function (event) {
   switchViewTo('entries');
 });
 
+/* Rendering the Entries */
 function renderEntries(journalentry) {
   var $container = document.createElement('div');
   $container.setAttribute('class', 'container');
@@ -87,6 +92,7 @@ function renderEntries(journalentry) {
   return $container;
 }
 
+/* DOM Content Loaded (for refreshing the page & loading entries (including new ones) */
 document.addEventListener('DOMContentLoaded', function (event) {
   for (let i = 0; i < data.entries.length; i++) {
     var value = renderEntries(data.entries[i]);
@@ -95,6 +101,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
   switchViewTo(data.view);
   data.editing = null;
 });
+
+/* Button Functions */
 
 $entriesButton.addEventListener('click', function (event) {
   switchViewTo('entries');
@@ -109,6 +117,7 @@ $codeJournalButton.addEventListener('click', function (event) {
   $photoUrl.value = '';
 });
 
+/* Switching View */
 function switchViewTo(targetPage) {
   for (let i = 0; i < $views.length; i++) {
     if ($views[i].getAttribute('data-view') === targetPage) {
@@ -120,6 +129,7 @@ function switchViewTo(targetPage) {
   }
 }
 
+/* Editing an Entry */
 $ul.addEventListener('click', function (event) {
   if (event.target.nodeName === 'I') {
     switchViewTo('entry-form');
