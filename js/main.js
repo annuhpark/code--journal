@@ -12,6 +12,11 @@ var $codeJournalButton = document.querySelector('.code-journal');
 var $views = document.querySelectorAll('.view');
 var $ul = document.querySelector('ul');
 var $newEntryHeading = document.querySelector('.new-entry-heading');
+var $deleteEntry = document.querySelector('.delete-entry');
+var $deleteLink = document.createElement('a');
+var $modal = document.querySelector('.modal');
+var $cancelButton = document.querySelector('.cancel-button');
+var $confirmButton = document.querySelector('.confirm-button');
 
 /* Updating photo from image URL */
 $photoUrl.addEventListener('input', function (event) {
@@ -99,11 +104,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
     $ul.appendChild(value);
   }
   switchViewTo(data.view);
-  data.editing = null;
 });
 
 /* Button Functions */
-
 $entriesButton.addEventListener('click', function (event) {
   switchViewTo('entries');
 });
@@ -115,6 +118,11 @@ $codeJournalButton.addEventListener('click', function (event) {
   $title.value = '';
   $notes.value = '';
   $photoUrl.value = '';
+  $deleteEntry.className = 'column-full align-right delete-entry';
+  if ($deleteLink.textContent === 'Delete Entry') {
+    $deleteEntry.removeChild($deleteLink);
+    $deleteLink.textContent = '';
+  }
 });
 
 /* Switching View */
@@ -134,6 +142,12 @@ $ul.addEventListener('click', function (event) {
   if (event.target.nodeName === 'I') {
     switchViewTo('entry-form');
     $newEntryHeading.textContent = 'Edit Entry';
+    $deleteEntry.classList.remove('align-right');
+    $deleteEntry.classList.add('space-between');
+    $deleteEntry.classList.add('row2');
+    $deleteEntry.classList.add('align-items-baseline');
+    $deleteLink.textContent = 'Delete Entry';
+    $deleteEntry.prepend($deleteLink);
     for (let i = 0; i < data.entries.length; i++) {
       if (data.entries[i].entryId === parseInt(event.target.closest('.container').getAttribute('data-entry-id'))) {
         data.editing = data.entries[i];
@@ -144,4 +158,22 @@ $ul.addEventListener('click', function (event) {
     $image.setAttribute('src', $photoUrl.value);
     $notes.value = data.editing.notes;
   }
+});
+
+$deleteLink.addEventListener('click', function (event) {
+  $modal.className = 'modal view';
+});
+
+$cancelButton.addEventListener('click', function (event) {
+  $modal.className = 'modal view hidden';
+});
+
+$confirmButton.addEventListener('click', function (event) {
+  for (let i = 0; i < $ul.children.length; i++) {
+    if (parseInt($ul.children[i].getAttribute('data-entry-id')) === data.editing.entryId) {
+      $ul.children[i].remove();
+      data.entries.splice(i, 1);
+    }
+  }
+  switchViewTo('entries');
 });
