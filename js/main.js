@@ -12,6 +12,8 @@ var $codeJournalButton = document.querySelector('.code-journal');
 var $views = document.querySelectorAll('.view');
 var $ul = document.querySelector('ul');
 var $newEntryHeading = document.querySelector('.new-entry-heading');
+var $deleteEntry = document.querySelector('.delete-entry');
+var $deleteLink = document.createElement('a');
 
 /* Updating photo from image URL */
 $photoUrl.addEventListener('input', function (event) {
@@ -115,6 +117,8 @@ $codeJournalButton.addEventListener('click', function (event) {
   $title.value = '';
   $notes.value = '';
   $photoUrl.value = '';
+  $deleteEntry.className = 'column-full align-right delete-entry';
+  $deleteEntry.removeChild($deleteLink);
 });
 
 /* Switching View */
@@ -134,6 +138,12 @@ $ul.addEventListener('click', function (event) {
   if (event.target.nodeName === 'I') {
     switchViewTo('entry-form');
     $newEntryHeading.textContent = 'Edit Entry';
+    $deleteEntry.classList.remove('align-right');
+    // $deleteLink = document.createElement('a');
+    $deleteEntry.classList.add('space-between');
+    $deleteEntry.classList.add('row2');
+    $deleteLink.textContent = 'Delete Entry';
+    $deleteEntry.prepend($deleteLink);
     for (let i = 0; i < data.entries.length; i++) {
       if (data.entries[i].entryId === parseInt(event.target.closest('.container').getAttribute('data-entry-id'))) {
         data.editing = data.entries[i];
