@@ -14,6 +14,9 @@ var $ul = document.querySelector('ul');
 var $newEntryHeading = document.querySelector('.new-entry-heading');
 var $deleteEntry = document.querySelector('.delete-entry');
 var $deleteLink = document.createElement('a');
+var $modal = document.querySelector('.modal');
+var $cancelButton = document.querySelector('.cancel-button');
+// var $confirmButton = document.querySelector('.confirm-button');
 
 /* Updating photo from image URL */
 $photoUrl.addEventListener('input', function (event) {
@@ -139,9 +142,9 @@ $ul.addEventListener('click', function (event) {
     switchViewTo('entry-form');
     $newEntryHeading.textContent = 'Edit Entry';
     $deleteEntry.classList.remove('align-right');
-    // $deleteLink = document.createElement('a');
     $deleteEntry.classList.add('space-between');
     $deleteEntry.classList.add('row2');
+    $deleteEntry.classList.add('align-items-baseline');
     $deleteLink.textContent = 'Delete Entry';
     $deleteEntry.prepend($deleteLink);
     for (let i = 0; i < data.entries.length; i++) {
@@ -154,4 +157,12 @@ $ul.addEventListener('click', function (event) {
     $image.setAttribute('src', $photoUrl.value);
     $notes.value = data.editing.notes;
   }
+});
+
+$deleteLink.addEventListener('click', function (event) {
+  $modal.className = 'modal view';
+});
+
+$cancelButton.addEventListener('click', function (event) {
+  $modal.className = 'modal view hidden';
 });
