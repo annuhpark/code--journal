@@ -16,7 +16,7 @@ var $deleteEntry = document.querySelector('.delete-entry');
 var $deleteLink = document.createElement('a');
 var $modal = document.querySelector('.modal');
 var $cancelButton = document.querySelector('.cancel-button');
-// var $confirmButton = document.querySelector('.confirm-button');
+var $confirmButton = document.querySelector('.confirm-button');
 
 /* Updating photo from image URL */
 $photoUrl.addEventListener('input', function (event) {
@@ -104,11 +104,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
     $ul.appendChild(value);
   }
   switchViewTo(data.view);
-  data.editing = null;
 });
 
 /* Button Functions */
-
 $entriesButton.addEventListener('click', function (event) {
   switchViewTo('entries');
 });
@@ -121,7 +119,10 @@ $codeJournalButton.addEventListener('click', function (event) {
   $notes.value = '';
   $photoUrl.value = '';
   $deleteEntry.className = 'column-full align-right delete-entry';
-  $deleteEntry.removeChild($deleteLink);
+  if ($deleteLink.textContent === 'Delete Entry') {
+    $deleteEntry.removeChild($deleteLink);
+    $deleteLink.textContent = '';
+  }
 });
 
 /* Switching View */
@@ -165,4 +166,14 @@ $deleteLink.addEventListener('click', function (event) {
 
 $cancelButton.addEventListener('click', function (event) {
   $modal.className = 'modal view hidden';
+});
+
+$confirmButton.addEventListener('click', function (event) {
+  for (let i = 0; i < $ul.children.length; i++) {
+    if (parseInt($ul.children[i].getAttribute('data-entry-id')) === data.editing.entryId) {
+      $ul.children[i].remove();
+      data.entries.splice(i, 1);
+    }
+  }
+  switchViewTo('entries');
 });
